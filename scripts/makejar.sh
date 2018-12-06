@@ -20,4 +20,4 @@ if [[ "$1" == "-r" ]]; then
 fi
 
 ./gradlew clean assemble${_profile} -x test -PVERSION_NAME=${version}
-cp -vf ./logback-android/build/outputs/aar/logback-android*.aar ./build/
+cp -vf ./build/outputs/aar/logback-android*.aar ./build/
