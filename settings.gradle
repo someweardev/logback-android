@@ -1,5 +1,3 @@
-include ':logback-android'
-
 // Don't generate BuildConfig.class or else it will be packaged (and
 // android.packagingOptions.exclude doesn't seem to remove it), which
 // causes an error in `connectedCheck` task:
