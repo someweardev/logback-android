@@ -3,7 +3,7 @@
 . gradle.properties
 
 function prop {
-    grep "${1}" local.properties|cut -d'=' -f2
+    grep "${1}" ~/.gradle/gradle.properties|cut -d'=' -f2
 }
 
 uploadArchives() {
