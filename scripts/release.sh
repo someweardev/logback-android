@@ -57,22 +57,11 @@ fail() {
 [[ "$(git rev-parse master)" != "$(git rev-parse origin/master)" ]] && fail "branches out of sync"
 [[ -n "$(git status -u -s)" ]] && fail "found unstaged changes"
 
-# gradle-release-plugin prompts for your Nexus credentials
-# with "Please specify username" (no mention of Nexus).
-# Use our own prompt to remind the user where they're
-# logging into to.
-user=${NEXUS_USERNAME}
-pass=${NEXUS_PASSWORD}
-[ -z "$user" ] && read -p "Nexus username: " user
-[ -z "$pass" ] && read -p "Nexus password: " -s pass
-
 ./gradlew   -Prelease.useAutomaticVersion=true  \
             -Prelease.releaseVersion=${version} \
             -Prelease.newVersion=${nextVersion} \
             -Pversion=${version}                \
             -PVERSION_NAME=${version}           \
-            -PNEXUS_USERNAME=${user}            \
-            -PNEXUS_PASSWORD=${pass}            \
             -Ppush                              \
             -x test                             \
             clean                               \
