@@ -245,6 +245,12 @@ bintray {
             gpg {
                 sign = true
             }
+            mavenCentralSync {
+                sync = true
+                user = SONATYPE_USER
+                password = SONATYPE_PW
+                close = '0' //Optional property. By default the staging repository is closed and artifacts are released to Maven Central. You can optionally turn this behaviour off (by puting 0 as value) and release the version manually.
+            }
         }
     }
 }
