@@ -122,6 +122,8 @@ task generateJavadoc(type: Javadoc) {
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     failOnError false
     group = 'build'
+    exclude '**/BuildConfig.java'
+    exclude '**/R.java'
 }
 
 task generateJavadocJar(type: Jar) {
