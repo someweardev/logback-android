@@ -141,6 +141,81 @@ publishing {
 
             groupId GROUP
             version VERSION_NAME
+
+            pom {
+                name = POM_NAME
+                description = POM_DESCRIPTION.replaceAll('"', '')
+                url = POM_URL
+
+                licenses {
+// TODO: Use license config from gradle.properties when ready to switch to Apache License.
+//                        license {
+//                            name POM_LICENCE_NAME
+//                            url POM_LICENCE_URL
+//                            distribution POM_LICENCE_DIST
+//                        }
+                    license {
+                        name = 'Eclipse Public License, Version 1.0'
+                        url = 'https://www.eclipse.org/legal/epl-v10.html'
+                        distribution = POM_LICENCE_DIST
+                    }
+                    license {
+                        name = 'GNU Lesser General Public License, Version 2.1'
+                        url = 'http://www.gnu.org/licenses/lgpl-2.1.html'
+                        distribution = POM_LICENCE_DIST
+                    }
+                }
+                developers {
+                    developer {
+                        id = POM_DEVELOPER_ID
+                        name = POM_DEVELOPER_NAME.replaceAll('"', '')
+                        email = POM_DEVELOPER_EMAIL
+                    }
+                }
+                scm {
+                    url = POM_SCM_URL
+                    connection = POM_SCM_CONNECTION
+                    developerConnection = POM_SCM_DEV_CONNECTION
+                }
+            }
+            pom.withXml {
+                def dependenciesNode = asNode().appendNode('dependencies')
+
+                configurations.implementation.allDependencies.each {
+                    if (it.name != 'unspecified') {
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', it.group)
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', it.version)
+
+                        if (!it.properties.excludeRules.empty) {
+                            def exclusionNode = dependencyNode.appendNode('exclusions').appendNode('exclusion')
+                            it.properties.excludeRules.each { ExcludeRule rule ->
+                                exclusionNode.appendNode('groupId', rule.group ?: '*')
+                                exclusionNode.appendNode('artifactId', rule.module ?: '*')
+                            }
+                        }
+                    }
+                }
+
+                configurations.compileOnly.allDependencies.each {
+                    if (it.name != 'unspecified') {
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', it.group)
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', it.version)
+                        dependencyNode.appendNode('scope', 'provided')
+
+                        if (!it.properties.excludeRules.empty) {
+                            def exclusionNode = dependencyNode.appendNode('exclusions').appendNode('exclusion')
+                            it.properties.excludeRules.each { ExcludeRule rule ->
+                                exclusionNode.appendNode('groupId', rule.group ?: '*')
+                                exclusionNode.appendNode('artifactId', rule.module ?: '*')
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
