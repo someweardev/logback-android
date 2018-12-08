@@ -221,8 +221,8 @@ publishing {
 }
 
 bintray {
-    user = BINTRAY_USER
-    key = BINTRAY_KEY
+    user = rootProject.hasProperty('BINTRAY_USER') ? BINTRAY_USER : System.getenv('BINTRAY_USER')
+    key = rootProject.hasProperty('BINTRAY_KEY') ? BINTRAY_USER : System.getenv('BINTRAY_KEY')
     publications = ['logbackAndroid']
 
     publish = false // true
