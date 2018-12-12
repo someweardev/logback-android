@@ -1,5 +1,6 @@
 plugins {
     id 'net.researchgate.release' version '2.6.0'
+    id 'com.jfrog.artifactory' version '4.8.1'
 }
 apply plugin: 'com.android.library'
 apply plugin: 'com.jfrog.bintray'
@@ -252,5 +253,24 @@ bintray {
                 close = '0' //Optional property. By default the staging repository is closed and artifacts are released to Maven Central. You can optionally turn this behaviour off (by puting 0 as value) and release the version manually.
             }
         }
+    }
+}
+
+artifactory {
+    contextUrl = 'http://oss.jfrog.org'
+    publish {
+        repository {
+            repoKey = 'oss-snapshot-local'
+            username = rootProject.hasProperty('BINTRAY_USER') ? BINTRAY_USER : System.getenv('BINTRAY_USER')
+            password = rootProject.hasProperty('BINTRAY_KEY') ? BINTRAY_KEY : System.getenv('BINTRAY_KEY')
+        }
+        defaults {
+            publications('logbackAndroid')
+            publishArtifacts = true
+            publishPom = true
+        }
+    }
+    resolve {
+        repoKey = 'jcenter'
     }
 }
