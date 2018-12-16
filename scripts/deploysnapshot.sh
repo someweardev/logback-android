@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-user=${NEXUS_USERNAME}
-pass=${NEXUS_PASSWORD}
-[ -z "$user" ] && read -p "Nexus username: " user
-[ -z "$pass" ] && read -p "Nexus password: " -s pass
+user=${BINTRAY_USER}
+pass=${BINTRAY_KEY}
+[ -z "$user" ] && read -p "Bintray username: " user
+[ -z "key" ] && read -p "Bintray key: " -s pass
 echo ''
 
-./gradlew uploadArchives -x test -x build -PNEXUS_USERNAME=${user} -PNEXUS_PASSWORD=${pass}
+./gradlew artifactoryPublish -x test -x build -PBINTRAY_USER=${user} -PBINTRAY_KEY=${key}
