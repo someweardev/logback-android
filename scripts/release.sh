@@ -1,7 +1,7 @@
 #!/usr/bin/env bash -e
 
 . gradle.properties
-
+. $HOME/.gradle/gradle.properties
 
 function nextVersion() {
     target=$1
@@ -67,15 +67,12 @@ fail() {
             clean                               \
             readme                              \
             release                             \
-            uploadArchives
+            artifactoryPublish
 
 # To deploy archives without git transactions (tagging, etc.),
 # replace the `release` task above with `assembleRelease`.
 
 echo -e "\n\n"
-
-echo TODO: upload archives to Bintray with:
-echo scripts/bintray.sh
 
 # FIXME: In test repo, this can't checkout 'gh-pages' -- no error provided
 #./gradlew   uploadDocs
