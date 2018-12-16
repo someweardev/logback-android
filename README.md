@@ -83,7 +83,7 @@ _Gradle_ **snapshot (unstable)**
 
 ```groovy
 repositories {
-  maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+  maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local' }
 }
 
 dependencies {
