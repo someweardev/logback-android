@@ -97,6 +97,10 @@ public class RollingFileAppender<E> extends FileAppender<E> {
     }
 
     currentlyActiveFile = new File(getFile());
+    if (currentlyActiveFile.exists() && !currentlyActiveFile.canWrite()) {
+      addError("target file is not writeable", new IOException("target file is not writeable"));
+      return;
+    }
     addInfo("Active log file name: " + getFile());
     super.start();
   }
