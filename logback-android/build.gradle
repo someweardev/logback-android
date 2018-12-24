@@ -248,8 +248,8 @@ bintray {
             }
             mavenCentralSync {
                 sync = true
-                user = project.hasProperty('SONATYPE_USER') ? SONATYPE_USER : System.getenv('SONATYPE_USER')
-                password = project.hasProperty('SONATYPE_PW') ? SONATYPE_PW : System.getenv('SONATYPE_PW')
+                user = project.hasProperty('NEXUS_USERNAME') ? NEXUS_USERNAME : System.getenv('NEXUS_USERNAME')
+                password = project.hasProperty('NEXUS_PASSWORD') ? NEXUS_PASSWORD : System.getenv('NEXUS_PASSWORD')
                 close = '0' //Optional property. By default the staging repository is closed and artifacts are released to Maven Central. You can optionally turn this behaviour off (by puting 0 as value) and release the version manually.
             }
         }
